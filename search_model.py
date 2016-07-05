@@ -14,15 +14,12 @@ import json
 
 
 #loading data
-tmpdata = np.genfromtxt('np_specg.csv', delimiter=',')
+tmpdata = np.genfromtxt('np_specg_white.csv', delimiter=',')
 X = np.nan_to_num(tmpdata)
 
 # Creation of labels
-y = []
-for i in range(0,27):
-    y.append(1)
-for i in range(27,53):
-    y.append(2)
+tmp = np.genfromtxt('labels_white.csv', delimiter=',')
+y = np.nan_to_num(tmp)
 
 # Global variables to store parameters for BEST model
 num_bin=0
@@ -58,11 +55,11 @@ for bin_number in range(100,200,5):
                 num_bin, max_mcc, model, parameter= model_run(predictions,y,'RandomForest()',i,bin_number,num_bin,max_mcc,model)
         if key == 'Linear_d':
             for i in value:
-                predictions= cv.cross_val_predict(LinearDiscriminantAnalysis(n_components=i,n_jobs=-1), stat, y, cv=5)            
+                predictions= cv.cross_val_predict(LinearDiscriminantAnalysis(n_components=i), stat, y, cv=5)            
                 num_bin, max_mcc, model, parameter= model_run(predictions,y,'LinearDiscriminantAnalysis()',i,bin_number,num_bin,max_mcc,model)
         if key == 'Support_v':
             for i in value:
-                predictions= cv.cross_val_predict(svm.LinearSVC(C=i,n_jobs=-1), stat, y, cv=5)            
+                predictions= cv.cross_val_predict(svm.LinearSVC(C=i), stat, y, cv=5)            
                 num_bin, max_mcc, model, parameter= model_run(predictions,y,'svm.LinearSVC()',i,bin_number,num_bin,max_mcc,model)     
               
 print(max_mcc,model,num_bin)
