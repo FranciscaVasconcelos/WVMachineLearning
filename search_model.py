@@ -64,7 +64,7 @@ for bin_number in range(20,30,5):
                 num_bin, max_mcc, model= model_run(predictions,y,'svm.LinearSVC()',i,bin_number,num_bin,max_mcc,model)     
               
 
-print(max_mcc,parameter,model,num_bin)
+print(max_mcc,model,num_bin)
 with open('parameters.json', 'w') as f:
      json.dump((max_mcc,parameter,model,num_bin), f)
 #print json.dumps(parameter,model,num_bin)
