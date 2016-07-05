@@ -13,19 +13,17 @@ import json
 #LABELS SEPARATED FROM THE MATRIX
 
 
-#loading data
-#tmpdata = np.genfromtxt('np_specg_white.csv', delimiter=',')
-#X = np.nan_to_num(tmpdata)
-tmpdata = np.genfromtxt('grapes_w.csv', delimiter=',')
+# Get data from csv
+tmpdata = np.genfromtxt('np_specg.csv', delimiter=',')
 X = np.nan_to_num(tmpdata)
-#X = np.append(X, temp)
-print(X)
-print()
+
 
 # Creation of labels
-tmp = np.genfromtxt('labels_white.csv', delimiter=',')
-y = np.nan_to_num(tmp)
-
+y = []
+for i in range(0,27):
+    y.append(1)
+for i in range(27,53):
+    y.append(2)
 # Global variables to store parameters for BEST model
 num_bin=0
 max_mcc=0
