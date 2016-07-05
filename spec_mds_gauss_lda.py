@@ -7,6 +7,7 @@ from matplotlib import pyplot as plt
 from sklearn.manifold import MDS
 from sklearn.decomposition import PCA
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
+from sklearn.metrics import matthews_corrcoef
 from sklearn import mixture
 import csv
 
@@ -34,6 +35,12 @@ for i in range(27,53):
 lda = LinearDiscriminantAnalysis()
 lda.fit(output, labels)
 print(lda.predict([[-0.8, -1]]))
+
+y_pred = lda.predict(output)
+print(labels)
+print(y_pred)
+mcc = matthews_corrcoef(labels,y_pred)
+print("MCC="+str(mcc))
 
 # Plotting LDA contour
 nx, ny = 200, 100

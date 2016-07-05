@@ -1,6 +1,7 @@
 import numpy as np
 from matplotlib import pyplot as plt
 from sklearn.decomposition import PCA
+from sklearn.metrics import matthews_corrcoef
 import csv
 from sklearn import svm
 
@@ -17,8 +18,14 @@ for i in range(0,27):
 for i in range(27,53):
     labels.append(2)
 
-s = svm.SVC()
+s = svm.SVC(kernel='linear')
 s.fit(comps, labels)
+y_pred = s.predict(comps)
+print(labels)
+print(y_pred)
+mcc = matthews_corrcoef(labels,y_pred)
+print("MCC="+str(mcc))
+
 
 h = .02  # step size in the mesh
 x_min, x_max = comps[:, 0].min() - 1, comps[:, 0].max() + 1
@@ -35,6 +42,7 @@ output_red = comps[0:26]
 output_green = comps[27:52]
 plt.scatter(output_red[:, 0], output_red[:,1], color='r')
 plt.scatter(output_green[:, 0], output_green[:, 1],color='g')
+plt.title('PCA with SVM Classification (Linear Kernel)')
 plt.show()
 
 

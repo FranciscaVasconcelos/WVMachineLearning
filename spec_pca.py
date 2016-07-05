@@ -3,17 +3,16 @@ from matplotlib import pyplot as plt
 from sklearn.manifold import TSNE
 from sklearn.decomposition import PCA
 from sklearn.discriminant_analysis import QuadraticDiscriminantAnalysis
+from sklearn.metrics import matthews_corrcoef
 import csv
 from mpl_toolkits.mplot3d import Axes3D
-
-
 
 tmpdata = np.genfromtxt('np_specg.csv', delimiter=',')
 data = np.nan_to_num(tmpdata)
 
 pca = PCA(n_components=2)
 comps = pca.fit_transform(data) 
-
+plt.plot(pca.components_.reshape((2,data.shape[0],data.shape[1])))
 
 #plt.plot(pca.explained_variance_, linewidth=2)
 #plt.title('Principal Component Analysis (PCA) Feature Assessment')
@@ -28,6 +27,11 @@ for i in range(27,53):
 # LDA model
 lda = QuadraticDiscriminantAnalysis()
 lda.fit(comps, labels)
+y_pred = lda.predict(comps)
+print(labels)
+print(y_pred)
+mcc = matthews_corrcoef(labels,y_pred)
+print("MCC="+str(mcc))
 
 
 # Plotting LDA contour
@@ -40,15 +44,15 @@ Z = Z[:, 1].reshape(xx.shape)
 plt.contour(xx, yy, Z, [0.5], linewidths=5, colors = 'k', linestyles = 'dashed')
 
 # Plotting LDA means
-plt.plot(lda.means_[0][0], lda.means_[0][1],'o', color='black', markersize=10)
-plt.plot(lda.means_[1][0], lda.means_[1][1],'o', color='black', markersize=10)
+#plt.plot(lda.means_[0][0], lda.means_[0][1],'o', color='black', markersize=10)
+#plt.plot(lda.means_[1][0], lda.means_[1][1],'o', color='black', markersize=10)
 plt.title('PCA with QDA')
 
 # Plot red and green data
 output_red = comps[0:26]
 output_green = comps[27:52]
-plt.scatter(output_red[:, 0], output_red[:,1], color='r')
-plt.scatter(output_green[:, 0], output_green[:, 1],color='g')
+#plt.scatter(output_red[:, 0], output_red[:,1], color='r')
+#plt.scatter(output_green[:, 0], output_green[:, 1],color='g')
 plt.show()
 
 
