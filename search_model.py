@@ -52,19 +52,21 @@ for bin_number in range(100,200,5):
     for key, value in ml_models.items():
         if key == 'Rand_f':
             for i in value:
-                predictions= cv.cross_val_predict(RandomForestClassifier(n_estimators=i), stat, y, cv=4)            
+                predictions= cv.cross_val_predict(RandomForestClassifier(n_estimators=i), stat, y, cv=5)            
                 num_bin, max_mcc, model, parameter= model_run(predictions,y,'RandomForest()',i,bin_number,num_bin,max_mcc,model)
         if key == 'Linear_d':
             for i in value:
-                predictions= cv.cross_val_predict(LinearDiscriminantAnalysis(), stat, y, cv=4)            
+                predictions= cv.cross_val_predict(LinearDiscriminantAnalysis(0), stat, y, cv=5)            
                 num_bin, max_mcc, model, parameter= model_run(predictions,y,'LinearDiscriminantAnalysis()',i,bin_number,num_bin,max_mcc,model)
         if key == 'Support_v':
             for i in value:
-                predictions= cv.cross_val_predict(svm.LinearSVC(C=i), stat, y, cv=4)            
+                predictions= cv.cross_val_predict(svm.LinearSVC(C=i), stat, y, cv=5)            
                 num_bin, max_mcc, model, parameter= model_run(predictions,y,'svm.LinearSVC()',i,bin_number,num_bin,max_mcc,model)     
               
-
 print(max_mcc,model,num_bin)
+
+if model == 'Linear_d':
+    parameter = 0
 
 output = {'model': model, 'parameter': parameter, 'num_bins': num_bin, 'mcc': max_mcc}
 
