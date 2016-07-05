@@ -24,12 +24,13 @@ for i in range(0,27):
 for i in range(27,53):
     y.append(2)
 
-#values=[100,500,1000,0,10**-3,10**-2,10**-1,1,10,100,1000]
+# Global variables to store parameters for BEST model
 num_bin=0
 max_mcc=0
 model=' '
 parameter=0
  
+# function to test model & store values if BEST model
 def model_run(predictions,y,model_name,val_num,bin_num,nb,maxm,model):
     mcc=metrics.matthews_corrcoef(y, predictions)
     med=np.mean(mcc)
@@ -41,7 +42,7 @@ def model_run(predictions,y,model_name,val_num,bin_num,nb,maxm,model):
     print(model_name,val_num, med)
     return nb, maxm, model,i    
 
-          
+# main loop to iterate models through all desired bins        
 for bin_number in range(100,200,5):
     print(bin_number)
     #result of the binning, stat 
@@ -49,6 +50,7 @@ for bin_number in range(100,200,5):
 
     ml_models = {'Rand_f': [100,500,1000],'Linear_d': [0],'Support_v':[10**-3,10**-2,10**-1,1,10,100,1000]}
 
+    # loop to iterate through all model types for current bin number
     for key, value in ml_models.items():
         if key == 'Rand_f':
             for i in value:
@@ -65,9 +67,10 @@ for bin_number in range(100,200,5):
               
 print(max_mcc,model,num_bin)
 
+# make dictionary of BEST model
 output = {'model': model, 'parameter': parameter, 'num_bins': num_bin, 'mcc': max_mcc}
 
+# store dictionary in json file
 with open('parameters.json', 'w') as f:
      json.dump(output, f)
-#print json.dumps(parameter,model,num_bin)
              
