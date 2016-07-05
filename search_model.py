@@ -66,6 +66,6 @@ for bin_number in range(20,30,5):
 
 print(max_mcc,model,num_bin)
 with open('parameters.json', 'w') as f:
-     json.dump((max_mcc,parameter,model,num_bin), f)
+     json.dump((max_mcc,model,num_bin), f)
 #print json.dumps(parameter,model,num_bin)
              
