@@ -18,13 +18,22 @@ import json
 #X = np.nan_to_num(tmpdata)
 tmpdata = np.genfromtxt('grapes_w.csv', delimiter=',')
 X = np.nan_to_num(tmpdata)
+X = X.transpose()
 #X = np.append(X, temp)
 print(X)
 print()
 
 # Creation of labels
-tmp = np.genfromtxt('labels_white.csv', delimiter=',')
-y = np.nan_to_num(tmp)
+#tmp = np.genfromtxt('labels_white.csv', delimiter=',')
+#y = np.nan_to_num(tmp)
+y = []
+for i in range(0,9):
+    y = np.append(y, [1])
+for i in range(0,9):
+    y = np.append(y, [2])
+for i in range(0,9):
+    y = np.append(y, [3])
+print(y)
 
 # Global variables to store parameters for BEST model
 num_bin=0
