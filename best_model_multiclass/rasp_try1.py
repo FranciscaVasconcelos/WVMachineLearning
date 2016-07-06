@@ -13,7 +13,7 @@ from sklearn import svm
 import json
 
 #loading data
-tmpdata = np.genfromtxt('rasp_data.csv', delimiter=',')
+tmpdata = np.genfromtxt('rasp_spectr.dat', delimiter=',')
 X = np.nan_to_num(tmpdata)
 
 
