@@ -13,8 +13,10 @@ from sklearn import svm
 import json
 
 #loading data
-tmpdata = np.genfromtxt('rasp_spectr.dat', delimiter=',')
+tmpdata = np.genfromtxt('rasp_spectr.csv', delimiter=',')
 X = np.nan_to_num(tmpdata)
+
+print(X)
 
 
 # Creation of labels

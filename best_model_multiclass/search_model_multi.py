@@ -15,9 +15,10 @@ import json
 # Get spectra data
 tmpdata = np.genfromtxt('grapes_white_transpose.csv', delimiter=',')
 X = np.nan_to_num(tmpdata)
+X = X.transpose()
 
 # Get spectra labels
-tmpdata = np.genfromtxt('labels.csv', delimiter=',')
+tmpdata = np.genfromtxt('labels_white.csv', delimiter=',')
 y = np.nan_to_num(tmpdata)
 
 
