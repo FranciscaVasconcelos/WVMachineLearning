@@ -1,3 +1,6 @@
+# Takes model selected by search_model_multi and makes it easily accessible to the RaspberryPi through a pkl file
+
+# imports
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.svm import SVC
 from sklearn import metrics
@@ -8,38 +11,26 @@ from sklearn import svm
 from sklearn.externals import joblib
 import json
 
-#MODULO 1
-#LABELS SEPARATED FROM THE MATRIX
-
-#loading data
-tmpdata = np.genfromtxt('np_specg.csv', delimiter=',')
+# Load the spectra data
+tmpdata = np.genfromtxt('grapes_white_transpose.csv', delimiter=',')
 X = np.nan_to_num(tmpdata)
 
-# Creation of labels
-y = []
-for i in range(0,27):
-    y.append(1)
-for i in range(27,53):
-    y.append(2)
 
+# Load the spectra labels
+tmpdata = np.genfromtxt('labels.csv', delimiter=',')
+y = np.nan_to_num(tmpdata)
+
+# Load the model parameters
 with open('parameters.json') as data_file:
     dic = json.load(data_file)
-
 model = dic['model']
-print(model)
 bin_num = dic['num_bins']
 parameter = dic['parameter']
 
-#MODULO2
-#PROCESS THE DATA(BINNING)
-
-#binning model matrix,binned matrix==stat 
+# bin the data 
 stat, bin_edges, binnum = stats.binned_statistic(range(X.shape[1]), X, 'median', bins=int(bin_num))
-print(stat.shape)
 
-#MODULO3
-#APPLY THE MODEL AND PRINT THE RESULT
-
+# prepare the choosen model to be saved in the pkl file
 if model == 'svm.LinearSVC()':
     clf=svm.LinearSVC(C=parameter)
 if model == 'RandomForestClassifier()': 
@@ -47,8 +38,7 @@ if model == 'RandomForestClassifier()':
 if model == 'LinearDiscriminantAnlysis()': 
     clf=LinearDiscriminantAnalysis()
 
+# save model to pkl file
 clf.fit(stat,y)
-print(clf)
 joblib.dump(clf ,"model.pkl")
-#a_result=joblib.load("model.pkl")
 
